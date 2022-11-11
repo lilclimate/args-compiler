@@ -1,17 +1,11 @@
+const map = new Map();
+map.set(Boolean, parseBoolean);
+map.set(Number, parseNumber);
+map.set(String, parseString);
+
 export function parse(options: any, key: string, args: any) {
-	let value;
-	if (options[key] === Boolean) {
-		value = parseBoolean(args, key);
-	}
-
-	if (options[key] === Number) {
-		value = parseNumber(args, key);
-	}
-
-	if (options[key] === String) {
-		value = parseString(args, key);
-	}
-	return value;
+	const parseHandle = map.get(options[key]);
+	return parseHandle(args, key);
 }
 function parseString(args: any, key: string) {
 	const flagIndex = args.indexOf(`-${key}`);
