@@ -25,7 +25,7 @@ test('should set path options to 8080 if pass path present', () => {
 	expect(args).toEqual({d: "/usr/logs"});
 });
 
-test('happy path', () => {
+test('happy path1', () => {
 	const options = {
 		l: Boolean,
 		p: Number,
@@ -40,6 +40,33 @@ test('happy path', () => {
 	});
 });
 
-//TODO: sad path
-// -l true
-// -p 8080 9090
+test.todo('happy path2', () => {
+	const options = {
+		l: Boolean,
+		p: Number,
+		d: String,
+	};	
+
+	const args = parseArgs(options, ["-g", "this", "is", "a", "list", "-d", "1", "2", "-4", "5"]);
+	expect(args).toEqual({
+		g: ["this", "is", "a", "list"],
+		d: [1, 2, -4, 5],
+	});
+});
+
+// done:
+// single Option: 
+// -l
+// -p 8080
+// -d /usr/logs
+// multiple options: -l -p 8080 -d /usr/logs 
+
+//TODO: 
+// sad path
+// - bool:  -l t / -l f
+// - int -p / -p 8080 9090
+// - string: -d / -d /usr/logs /urs/logs
+// default value
+// - bool: false
+// - int: 0
+// - string: ""
