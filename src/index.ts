@@ -12,6 +12,11 @@ export const parseArgs = (options: any, args: any) => {
 		value = Number.parseInt(args[flagIndex + 1]);
 	}
 
+	if (options[key] === String) { 
+		const flagIndex = args.indexOf(`-${key}`);
+		value = args[flagIndex + 1];
+	}
+
 	
 	
 	return {[key]: value};	

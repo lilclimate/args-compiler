@@ -20,6 +20,13 @@ test('should set port options to 8080 if pass 8080 present', () => {
 });
 
 //TODO: -d -> /usr/logs
+test('should set path options to 8080 if pass path present', () => {
+	const options = {
+		d: String,
+	};	
+	const args = parseArgs(options, ["-d", "/usr/logs"]);
+	expect(args).toEqual({d: "/usr/logs"});
+});
 
 //TODO: -l -p 8080 -d /usr/logs
 test.todo('happy path', () => {
