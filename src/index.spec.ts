@@ -1,6 +1,22 @@
 import {test, expect} from "vitest";
 import { parseArgs } from "./index";
 
+// single Option: 
+// -l
+// -p 8080
+// -d /usr/logs
+// multiple options: -l -p 8080 -d /usr/logs 
+
+// 
+// TODO: sad path
+// - bool:  -l t / -l f
+// - int -p / -p 8080 9090
+// - string: -d / -d /usr/logs /urs/logs
+// TODO: default value
+// - bool: false
+// - int: 0
+// - string: ""
+
 test('should set boolean options to true if flag present', () => {
 	const options = {
 		l: Boolean
@@ -54,19 +70,4 @@ test.todo('happy path2', () => {
 	});
 });
 
-// done:
-// single Option: 
-// -l
-// -p 8080
-// -d /usr/logs
-// multiple options: -l -p 8080 -d /usr/logs 
 
-//TODO: 
-// sad path
-// - bool:  -l t / -l f
-// - int -p / -p 8080 9090
-// - string: -d / -d /usr/logs /urs/logs
-// default value
-// - bool: false
-// - int: 0
-// - string: ""
