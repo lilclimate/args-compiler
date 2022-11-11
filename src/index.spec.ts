@@ -10,7 +10,14 @@ test('should set boolean options to true if flag present', () => {
 	expect(args).toEqual({l: true});
 });
 
-//TODO: -p -> 8080
+//-p -> 8080
+test('should set port options to 8080 if pass 8080 present', () => {
+	const options = {
+		p: Number,
+	};	
+	const args = parseArgs(options, ["-p", "8080"]);
+	expect(args).toEqual({p: 8080});
+});
 
 //TODO: -d -> /usr/logs
 
