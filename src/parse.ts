@@ -5,22 +5,22 @@ export function parse(options: any, key: string, args: any) {
 	}
 
 	if (options[key] === Number) {
-		value = parseNumber(args, key, value);
+		value = parseNumber(args, key);
 	}
 
 	if (options[key] === String) {
-		value = parseString(args, key, value);
+		value = parseString(args, key);
 	}
 	return value;
 }
-function parseString(args: any, key: string, value: any) {
+function parseString(args: any, key: string) {
 	const flagIndex = args.indexOf(`-${key}`);
-	value = args[flagIndex + 1];
+	const value = args[flagIndex + 1];
 	return value;
 }
-function parseNumber(args: any, key: string, value: any) {
+function parseNumber(args: any, key: string) {
 	const flagIndex = args.indexOf(`-${key}`);
-	value = Number.parseInt(args[flagIndex + 1]);
+	const value = Number.parseInt(args[flagIndex + 1]);
 	return value;
 }
 function parseBoolean(args: any, key: string): any {
