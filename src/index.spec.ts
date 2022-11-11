@@ -25,8 +25,7 @@ test('should set path options to 8080 if pass path present', () => {
 	expect(args).toEqual({d: "/usr/logs"});
 });
 
-//TODO: -l -p 8080 -d /usr/logs
-test.todo('happy path', () => {
+test('happy path', () => {
 	const options = {
 		l: Boolean,
 		p: Number,
