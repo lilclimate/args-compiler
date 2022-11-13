@@ -5,6 +5,8 @@ export function parse(options: any, key: string, args: any) {
 	return parseHandle(args, key);
 }
 
+
+// TODO: 待下沉parseNumber、parseBoolean、parseString的实现与测试逻辑
 const defaultStringValue = "";
 function parseString(args: any, key: string) {
 	const flagIndex = getFlagIndex(args, key);

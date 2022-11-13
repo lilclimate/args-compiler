@@ -15,7 +15,7 @@ import { parseArgs } from "./index";
 // default value
 // - bool: false
 // - int: 0
-// TODO: - string: ""
+// - string: ""
 
 test('should set boolean options to true if flag present', () => {
 	const options = {
