@@ -86,6 +86,14 @@ test('should not accept extra argument for string single value option', () => {
 	expect(() => parseArgs(options, ["-d", "/user/logs", "/usr/logs"])).toThrowError("too many argument");
 });
 
+test('should set default value to "" for string option', () => {
+	const options = {
+		d: String,
+	};	
+	const args = parseArgs(options, []);
+	expect(args).toEqual({d: ""});
+});
+
 test('should pass multi options1', () => {
 	const options = {
 		l: Boolean,

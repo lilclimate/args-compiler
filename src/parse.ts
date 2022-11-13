@@ -4,8 +4,11 @@ export function parse(options: any, key: string, args: any) {
 	const parseHandle = handlerMap.get(options[key]);
 	return parseHandle(args, key);
 }
+
+const defaultStringValue = "";
 function parseString(args: any, key: string) {
 	const flagIndex = getFlagIndex(args, key);
+	if (flagIndex === -1) return defaultStringValue;
 	if (flagIndex + 2 < args.length && !args[flagIndex + 2].startsWith('-'))
 		throw new Error('too many argument');
 	return getFlagValue(args, key);
