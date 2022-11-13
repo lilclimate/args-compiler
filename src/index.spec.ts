@@ -8,14 +8,14 @@ import { parseArgs } from "./index";
 // multiple options: -l -p 8080 -d /usr/logs 
 
 // 
-// TODO: sad path
+// sad path
 // - bool:  -l t / -l f
-// - int -p / -p 8080 9090
-// - string: -d / -d /usr/logs /urs/logs
-// TODO: default value
+// TODO: - int -p / -p 8080 9090
+// TODO: - string: -d / -d /usr/logs /urs/logs
+// default value
 // - bool: false
-// - int: 0
-// - string: ""
+// TODO: - int: 0
+// TODO: - string: ""
 
 test('should set boolean options to true if flag present', () => {
 	const options = {
@@ -23,6 +23,21 @@ test('should set boolean options to true if flag present', () => {
 	};	
 	const args = parseArgs(options, ["-l"]);
 	expect(args).toEqual({l: true});
+});
+
+test('should not accept extra argument for boolean option', () => { 
+	const options = {
+		l: Boolean
+	};	
+	expect(() => parseArgs(options, ["-l", "t"])).toThrowError("invalid argument");	
+});
+
+test('should set default value to false if option not preset', () => { 
+	const options = {
+		l: Boolean
+	};	
+	const args = parseArgs(options, []);
+	expect(args).toEqual({l: false});
 });
 
 test('should set port options to 8080 if pass 8080 present', () => {
@@ -70,10 +85,5 @@ test.todo('should pass multi options2', () => {
 	});
 });
 
-test('should not accept extra argument for boolean option', () => { 
-	const options = {
-		l: Boolean
-	};	
-	expect(() => parseArgs(options, ["-l", "t"])).toThrowError("invalid argument");	
-});
+
 

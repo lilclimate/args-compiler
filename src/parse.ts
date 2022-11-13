@@ -1,6 +1,3 @@
-
-
-
 export function parse(options: any, key: string, args: any) {
 	const handlerMap = initHandlerMap();
 	const parseHandle = handlerMap.get(options[key]);
