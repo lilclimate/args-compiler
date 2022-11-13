@@ -15,13 +15,18 @@ function parseNumber(args: any, key: string) {
 }
 
 function parseBoolean(args: any, key: string): any {
-	return args.includes(`-${key}`);
+	const flagIndex = getFlagIndex(args, key);
+	return flagIndex !== -1;
 }
 
 function getFlagValue(args: any, key: string) {
-	const flagIndex = args.indexOf(`-${key}`);
+	const flagIndex = getFlagIndex(args, key);
 	const value = args[flagIndex + 1];
 	return value;
+}
+
+function getFlagIndex(args: any, key: string) {
+	return args.indexOf(`-${key}`);
 }
 
 function initHandlerMap() {
