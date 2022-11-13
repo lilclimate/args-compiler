@@ -11,7 +11,7 @@ import { parseArgs } from "./index";
 // sad path
 // - bool:  -l t / -l f
 // - int -p / -p 8080 9090
-// TODO: - string: -d / -d /usr/logs /urs/logs
+// - string: -d / -d /usr/logs /urs/logs
 // default value
 // - bool: false
 // - int: 0
@@ -48,14 +48,14 @@ test('should set port options to 8080 if pass 8080 present', () => {
 	expect(args).toEqual({p: 8080});
 });
 
-test('should not accept extra argument for single value option', () => {
+test('should not accept extra argument for number single value option', () => {
 	const options = {
 		p: Number,
 	};	
 	expect(() => parseArgs(options, ["-p", "8080", "8081"])).toThrowError("too many argument");
 });
 
-test('should not accept insufficient argument for single value option', () => {
+test('should not accept insufficient argument for number single value option', () => {
 	const options = {
 		p: Number,
 	};	
@@ -63,7 +63,7 @@ test('should not accept insufficient argument for single value option', () => {
 	expect(() => parseArgs(options, ["-p"])).toThrowError('insufficient argument');
 });
 
-test('should set default value to 0 for int option', () => {
+test('should set default value to 0 for number option', () => {
 	const options = {
 		p: Number,
 	};	
@@ -77,6 +77,13 @@ test('should set path options to /user/logs if pass path present', () => {
 	};	
 	const args = parseArgs(options, ["-d", "/usr/logs"]);
 	expect(args).toEqual({d: "/usr/logs"});
+});
+
+test('should not accept extra argument for string single value option', () => {
+	const options = {
+		d: String,
+	};	
+	expect(() => parseArgs(options, ["-d", "/user/logs", "/usr/logs"])).toThrowError("too many argument");
 });
 
 test('should pass multi options1', () => {

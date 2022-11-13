@@ -5,6 +5,9 @@ export function parse(options: any, key: string, args: any) {
 	return parseHandle(args, key);
 }
 function parseString(args: any, key: string) {
+	const flagIndex = getFlagIndex(args, key);
+	if (flagIndex + 2 < args.length && !args[flagIndex + 2].startsWith('-'))
+		throw new Error('too many argument');
 	return getFlagValue(args, key);
 }
 
