@@ -48,7 +48,7 @@ test('should set port options to 8080 if pass 8080 present', () => {
 	expect(args).toEqual({p: 8080});
 });
 
-test('should set path options to 8080 if pass path present', () => {
+test('should set path options to /user/logs if pass path present', () => {
 	const options = {
 		d: String,
 	};	
