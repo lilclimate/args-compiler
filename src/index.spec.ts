@@ -52,7 +52,7 @@ test('should not accept extra argument for single value option', () => {
 	const options = {
 		p: Number,
 	};	
-	expect(() => parseArgs(options, ["-p", "8080", "8081"])).toThrowError();
+	expect(() => parseArgs(options, ["-p", "8080", "8081"])).toThrowError("too many argument");
 });
 
 test('should not accept insufficient argument for single value option', () => {
