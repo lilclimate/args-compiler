@@ -9,6 +9,7 @@ function parseString(args: any, key: string) {
 
 function parseNumber(args: any, key: string) {
 	const flagIndex = getFlagIndex(args, key);
+	if (flagIndex + 1 === args.length || args[flagIndex + 1].startsWith('-')) throw new Error("insufficient argument");
 	if (flagIndex + 2 < args.length && !args[flagIndex + 2].startsWith('-'))
 		throw new Error('invalid argument');
 	return Number.parseInt(getFlagValue(args, key));

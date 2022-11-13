@@ -10,7 +10,7 @@ import { parseArgs } from "./index";
 // 
 // sad path
 // - bool:  -l t / -l f
-// TODO: - int -p / -p 8080 9090
+// - int -p / -p 8080 9090
 // TODO: - string: -d / -d /usr/logs /urs/logs
 // default value
 // - bool: false
@@ -53,6 +53,14 @@ test('should not accept extra argument for single value option', () => {
 		p: Number,
 	};	
 	expect(() => parseArgs(options, ["-p", "8080", "8081"])).toThrowError();
+});
+
+test('should not accept insufficient argument for single value option', () => {
+	const options = {
+		p: Number,
+	};	
+	expect(() => parseArgs(options, ["-p", "-l"])).toThrowError('insufficient argument');
+	expect(() => parseArgs(options, ["-p"])).toThrowError('insufficient argument');
 });
 
 test('should set path options to /user/logs if pass path present', () => {
