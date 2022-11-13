@@ -70,11 +70,10 @@ test.todo('should pass multi options2', () => {
 	});
 });
 
-test.todo('should not accept extra argument for boolean option', () => { 
+test('should not accept extra argument for boolean option', () => { 
 	const options = {
 		l: Boolean
 	};	
-	const args = parseArgs(options, ["-l", "t"]);
-	expect(args).toThrowError();	
+	expect(() => parseArgs(options, ["-l", "t"])).toThrowError("invalid argument");	
 });
 

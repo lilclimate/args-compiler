@@ -16,6 +16,8 @@ function parseNumber(args: any, key: string) {
 
 function parseBoolean(args: any, key: string): any {
 	const flagIndex = getFlagIndex(args, key);
+	if (flagIndex + 1 < args.length && !args[flagIndex + 1].startsWith('-'))
+		throw new Error('invalid argument');
 	return flagIndex !== -1;
 }
 
