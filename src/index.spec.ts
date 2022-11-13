@@ -14,7 +14,7 @@ import { parseArgs } from "./index";
 // TODO: - string: -d / -d /usr/logs /urs/logs
 // default value
 // - bool: false
-// TODO: - int: 0
+// - int: 0
 // TODO: - string: ""
 
 test('should set boolean options to true if flag present', () => {
@@ -61,6 +61,14 @@ test('should not accept insufficient argument for single value option', () => {
 	};	
 	expect(() => parseArgs(options, ["-p", "-l"])).toThrowError('insufficient argument');
 	expect(() => parseArgs(options, ["-p"])).toThrowError('insufficient argument');
+});
+
+test('should set default value to 0 for int option', () => {
+	const options = {
+		p: Number,
+	};	
+	const args = parseArgs(options, []);
+	expect(args).toEqual({p: 0});
 });
 
 test('should set path options to /user/logs if pass path present', () => {
