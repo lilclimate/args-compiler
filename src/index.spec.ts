@@ -12,6 +12,7 @@ import { parseArgs } from "./index";
 // - bool:  -l t / -l f
 // - int -p / -p 8080 9090
 // - string: -d / -d /usr/logs /urs/logs
+// missing option and pass args
 // default value
 // - bool: false
 // - int: 0
@@ -107,6 +108,20 @@ test('should pass multi options1', () => {
 		p: 8080,
 		d: "/usr/logs",
 	});
+});
+
+test.todo('should throw illegal option exception if option attributes  not present', () => { 
+		const options = {
+		l: Boolean,
+		p: Number,
+	};	
+
+	const args = parseArgs(options, ["-l", "-p", "8080", "-d", "/usr/logs"]);
+	expect(args).toEqual({
+		l: true,
+		p: 8080,
+		d: "/usr/logs",
+	});	
 });
 
 test.todo('should pass multi options2', () => {
