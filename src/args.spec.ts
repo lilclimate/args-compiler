@@ -39,6 +39,10 @@ describe('Args parser', () => {
 		test('should only fetch values util next flag', () => { 
 			expect(opt(['-l', 'a', 'b', '-p'])).toEqual(['a', 'b']);
 		});
+
+		test('should fetch empty array if no value given', () => {
+			expect(opt(['-l'])).toEqual([]);	
+		});
 	});
 });
 
@@ -47,7 +51,7 @@ function option(flag ,type) {
 		let index = args.indexOf(`-${flag}`);
 		let nextIndex = args.findIndex((v, i) => i > index && /^-[a-zA-Z-]+/.test(v) );
 		if (nextIndex === -1) nextIndex = args.length; 
-		return args.slice(index + 1, nextIndex);
+		return type(args.slice(index + 1, nextIndex));
 	}	
 }
 function bool(): any {
