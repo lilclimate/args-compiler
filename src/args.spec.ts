@@ -23,7 +23,7 @@ import {describe, expect, test  } from "vitest";
 //	should return default value if undefined value given -> string:""
 
 describe('args', () => {
-	test.skip('should parse multi options', () => { 
+	test('should parse multi options', () => { 
 		let schema = {
 			logging: option('l', bool()), 
 			int: option('p', int()),
