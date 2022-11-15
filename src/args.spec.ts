@@ -9,13 +9,12 @@ import {describe, expect, test  } from "vitest";
 //	should fetch empty array if no value given
 //	should fetch undefined if no flag match
 //	should call type to handle values
-//	should return true if empty array given
-// 	TODO: should return false if undefined given
-//	TODO: bool -l	
+//	should return true if empty array given -> (bool -l && default value)
+// 	should return false if undefined given
 //	TODO: int -p 8080
 //	TODO: string -d /usr/logs
 //	sad path
-//	TODO:	bool -l t / -l t f / undefined
+//	TODO:	bool -l t / -l t f
 //	TODO: int -p / -p 8080 8081
 //	TODO:	string -d / -d /usr/local /usr/logs
 //	default
@@ -87,10 +86,14 @@ describe('option', () => {
 });
 
 describe('bool', () => { 
+	const type = bool();
 	test('should return true if empty array given', () => { 
-		const type = bool();
 		expect(type([])).toBeTruthy();
 	})
+
+	test('should return false if undefined given', () => { 
+		expect(type(undefined)).toBeFalsy();
+	});
 })
 
 function parse(schema: any, args: string[]): any {
@@ -114,6 +117,7 @@ function option(flag: string, type: any) {
 
 function bool(): Function {
 	return (args): boolean => {
+		if (!args) return false;
 		if (args.length === 0) return true;
 		return false;
 	 };
