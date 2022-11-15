@@ -94,6 +94,14 @@ describe('Args parser', () => {
 		test('should return default value if undefined value given', () => { 
 			expect(type(undefined)).toEqual('default');
 		});
+
+		test('should throw exception if more than 1 value present', () => { 
+			expect(() => type(['/usr/logs', '/usr/local'])).toThrowError('too many values');
+		});
+
+		test('should throw exception if no value present', () => { 
+			expect(() => type([])).toThrowError('too few values');
+		})
 	});
 });
 
@@ -125,7 +133,9 @@ function int(defaultValue= 0) {
 function string(defaultValue = '') {
 	return (args) => { 
 		if (!args) return defaultValue;
+		if (args.length === 0) throw new Error("too few values");
 		if (args.length === 1) return args[0];
+		if (args.length > 1) throw new Error("too many values"); 
 	}
 }
 
