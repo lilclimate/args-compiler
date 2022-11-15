@@ -12,7 +12,7 @@ import {describe, expect, test  } from "vitest";
 //	should return true if empty array given -> (bool -l && default value)
 // 	should return false if undefined given
 //	should return int value if array with single value given ->  int -p 8080
-//	TODO: string -d /usr/logs
+//	should return string value if array with single value given -> string -d /usr/logs
 //	sad path
 //	TODO:	bool -l t / -l t f
 //	TODO: int -p / -p 8080 8081
@@ -107,6 +107,13 @@ describe('int', () => {
 	});
 });
 
+describe('string', () => {
+	test('should return string value if array with single value given', () => { 
+		const type = string();
+		expect(type(['/usr/local'])).toEqual('/usr/local');
+	});	
+});
+
 function parse(schema: any, args: string[]): any {
 	const option = {};
 	for (const key of Object.keys(schema)) {
@@ -141,8 +148,10 @@ function int(defaultValue: number= 8080): Function {
 	};
 }
 
-function string(): any {
-	
+function string(): Function {
+	return (args): string => { 
+		return args[0];
+	}	
 }
 
 
