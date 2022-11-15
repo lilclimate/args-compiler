@@ -1,6 +1,6 @@
-import {describe, expect, it  } from "vitest";
+import {describe, expect, test  } from "vitest";
 describe('Args parser', () => {
-	it.skip('should parse multi options', () => {
+	test.skip('should parse multi options', () => {
 		let schema = {
 			logging: option('l', bool()),
 			directory: option('d', string()),
@@ -13,6 +13,21 @@ describe('Args parser', () => {
 			port: 8080,
 			directory: '/usr/logs'
 		});
+	});
+
+	describe('parse', () => {
+		test('should call parse in schema to build option', () => {
+			let schema = {
+				logging: (args) => args,
+				port: (args) => args
+			};
+
+			let option = parse(schema, ["args"]);
+			expect(option).toEqual({
+				logging: ['args'],
+				port: ['args'],
+			});
+		});	
 	});
 });
 
@@ -29,7 +44,11 @@ function string(): any {
 }
 
 function parse(schema, args) {
-	
+	let option = {};	
+	for (let key of Object.keys(schema)) { 
+		option[key] = args;
+	}	
+	return option;
 }
 
 
