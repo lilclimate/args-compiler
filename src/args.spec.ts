@@ -77,12 +77,14 @@ describe('Args parser', () => {
 	});
 
 	describe('string', () => {
-		const type = string();
+		const type = string('default');
 		test('should return string value if array with single value given', () => { 
 			expect(type(['/usr/logs'])).toEqual('/usr/logs');
 		});	
 
-		test.skip('should return default value if undefined value given', () => { });
+		test('should return default value if undefined value given', () => { 
+			expect(type(undefined)).toEqual('default');
+		});
 	});
 });
 
@@ -109,8 +111,9 @@ function int(defaultValue= 0) {
 	}
 }
 
-function string() {
+function string(defaultValue = '') {
 	return (args) => { 
+		if (!args) return defaultValue;
 		if (args.length === 1) return args[0];
 	}
 }
