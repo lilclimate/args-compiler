@@ -16,38 +16,27 @@ describe('bool', () => {
 		expect(() => type(['true'])).toThrowError("too many values");
 	});
 });
-describe('int', () => {
-	const type = singleValueOptionParser(IntDefaultValue, parseInt);
+
+describe('single value option parser', () => { 
+const intType = singleValueOptionParser(IntDefaultValue, parseInt);
 	test('should return int value if array with single value given', () => {
-		expect(type(['1'])).toEqual(1);
-	});
-
-	test('should return default value if undefined value given', () => {
-		expect(type(undefined)).toEqual(8080);
+		expect(intType(['1'])).toEqual(1);
 	});
 
 	test('should throw exception if more than 1 value present', () => {
-		expect(() => type(['8080', '8090'])).toThrowError('too many values');
+		expect(() => intType(['8080', '8090'])).toThrowError('too many values');
 	});
 
 	test('should throw exception if no value present', () => {
-		expect(() => type([])).toThrowError('too few values');
-	});
-});
-describe('string', () => {
-	const type = singleValueOptionParser(StringDefaultValue, (value) => value);
-	test('should return string value if array with single value given', () => {
-		expect(type(['/usr/local'])).toEqual('/usr/local');
+		expect(() => intType([])).toThrowError('too few values');
 	});
 
 	test('should return default value if undefined value given', () => {
-		expect(type(undefined)).toEqual('null');
+		expect(intType(undefined)).toEqual(8080);
 	});
 
-	test('should throw exception if more than 1 value present', () => {
-		expect(() => type(['/usr/local', '/usr/logs'])).toThrowError('too many values');
-	});
-	test('should throw exception if no value present', () => {
-		expect(() => type([])).toThrowError('too few values');
+	const stringType = singleValueOptionParser(StringDefaultValue, (value) => value);	
+		test('should return default value if undefined value given', () => {
+		expect(stringType(undefined)).toEqual('null');
 	});
 });
