@@ -1,6 +1,7 @@
 import {describe, expect, test  } from "vitest";
 import { parse } from "./args";
-import { option, bool, int, string } from "./option";
+import { option } from "./option";
+import { bool, int, string } from "./type";
 
 //	happy path
 //	should parse multi options		  
