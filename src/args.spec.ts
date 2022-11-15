@@ -66,9 +66,13 @@ describe('Args parser', () => {
 	});
 
 	describe('int', () => {
-		const type = int();
+		const type = int(8080);
 		test('should return int value if array with single value given', () => { 
 			expect(type(['1'])).toEqual(1);			
+		});	
+
+		test('should return default value if undefined value given', () => { 
+			expect(type(undefined)).toEqual(8080);			
 		});	
 	});
 });
@@ -89,8 +93,9 @@ function bool() {
 	};
 }
 
-function int() {
+function int(defaultValue= 0) {
 	return (args) => { 
+		if (args === undefined) return defaultValue;
 		if (args.length === 1) return parseInt(args[0]);
 	}
 }
