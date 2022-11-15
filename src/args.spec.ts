@@ -11,7 +11,7 @@ import {describe, expect, test  } from "vitest";
 //	should call type to handle values
 //	should return true if empty array given -> (bool -l && default value)
 // 	should return false if undefined given
-//	TODO: int -p 8080
+//	should return int value if array with single value given ->  int -p 8080
 //	TODO: string -d /usr/logs
 //	sad path
 //	TODO:	bool -l t / -l t f
@@ -96,6 +96,13 @@ describe('bool', () => {
 	});
 })
 
+describe('int', () => {
+	const type = int();	
+	test('should return int value if array with single value given', () => { 
+		expect(type(['1'])).toEqual(1);
+	});
+});
+
 function parse(schema: any, args: string[]): any {
 	const option = {};
 	for (const key of Object.keys(schema)) {
@@ -123,8 +130,10 @@ function bool(): Function {
 	 };
 }
 
-function int(): any {
-	
+function int(): Function {
+	return (args): number => { 
+		return parseInt(args[0]);
+	};
 }
 
 function string(): any {
