@@ -4,7 +4,7 @@ import {describe, expect, test  } from "vitest";
 //	TODO: should parse multi options		  
 //	TODO: should parse multi options in list
 // 	should call parse in schema to build option
-//	TODO: should fetch values follow by flag
+//	should fetch values follow by flag
 //	TODO: should only fetch values util next flag
 //	TODO: should fetch empty array if no value given
 //	TODO: should fetch undefined if no flag match
@@ -58,6 +58,13 @@ describe('parse', () => {
 	});
 });
 
+describe('option', () => {
+	test('should fetch values follow by flag', () => {
+		const opt = option('d', (value) => value);
+		expect(opt(['-d', 'a', 'b'])).toEqual(['a', 'b']);	
+	});	
+});
+
 function parse(schema: any, args: string[]): any {
 	const option = {};
 	for (const key of Object.keys(schema)) {
@@ -68,6 +75,10 @@ function parse(schema: any, args: string[]): any {
 
 
 function option(flag: string, type: any) {
+	return (args) => { 
+		const flagIndex = args.indexOf(`-${flag}`);
+		return args.slice(flagIndex + 1);
+	};
 }
 
 function bool(): any {
