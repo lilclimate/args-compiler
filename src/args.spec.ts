@@ -59,10 +59,15 @@ describe('parse', () => {
 });
 
 describe('option', () => {
+
+	const opt = option('d', (value) => value);
 	test('should fetch values follow by flag', () => {
-		const opt = option('d', (value) => value);
 		expect(opt(['-d', 'a', 'b'])).toEqual(['a', 'b']);	
 	});	
+
+	test('should only fetch values util next flag', () => { 
+		expect(opt(['-d', 'a', 'b', '-p'])).toEqual(['a', 'b']);	
+	});
 });
 
 function parse(schema: any, args: string[]): any {
@@ -77,7 +82,9 @@ function parse(schema: any, args: string[]): any {
 function option(flag: string, type: any) {
 	return (args) => { 
 		const flagIndex = args.indexOf(`-${flag}`);
-		return args.slice(flagIndex + 1);
+		let nextFlagIndex = args.findIndex((v, i) => i > flagIndex && /^-[a-zA-Z-]+/.test(v))
+		nextFlagIndex = nextFlagIndex === -1 ? args.length : nextFlagIndex;
+		return args.slice(flagIndex + 1, nextFlagIndex);
 	};
 }
 
