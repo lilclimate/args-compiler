@@ -6,8 +6,8 @@ import {describe, expect, test  } from "vitest";
 // 	should call parse in schema to build option
 //	should fetch values follow by flag
 //	should only fetch values util next flag
-//	TODO: should fetch empty array if no value given
-//	TODO: should fetch undefined if no flag match
+//	should fetch empty array if no value given
+//	should fetch undefined if no flag match
 //	TODO: should call type to handle values
 //	TODO: bool -l	
 //	TODO: int -p 8080
@@ -72,6 +72,10 @@ describe('option', () => {
 	test('should fetch empty array if no value given', () => {
 		expect(opt(['-d'])).toEqual([]);
 	 });
+
+	test('should fetch undefined if no flag match', () => { 
+		expect(opt(['-p', '8080'])).toBeUndefined();
+	});
 });
 
 function parse(schema: any, args: string[]): any {
@@ -86,6 +90,7 @@ function parse(schema: any, args: string[]): any {
 function option(flag: string, type: any) {
 	return (args) => { 
 		const flagIndex = args.indexOf(`-${flag}`);
+		if (flagIndex === -1) return undefined;
 		let nextFlagIndex = args.findIndex((v, i) => i > flagIndex && /^-[a-zA-Z-]+/.test(v))
 		nextFlagIndex = nextFlagIndex === -1 ? args.length : nextFlagIndex;
 		return args.slice(flagIndex + 1, nextFlagIndex);
