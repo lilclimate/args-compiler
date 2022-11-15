@@ -64,6 +64,13 @@ describe('Args parser', () => {
 			expect(type(undefined)).toBeFalsy();
 		});
 	});
+
+	describe('int', () => {
+		const type = int();
+		test('should return int value if array with single value given', () => { 
+			expect(type(['1'])).toEqual(1);			
+		});	
+	});
 });
 
 function option(flag ,type) { 
@@ -82,7 +89,10 @@ function bool() {
 	};
 }
 
-function int(): any {
+function int() {
+	return (args) => { 
+		if (args.length === 1) return parseInt(args[0]);
+	}
 }
 
 function string(): any {
