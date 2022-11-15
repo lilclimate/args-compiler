@@ -122,24 +122,25 @@ function bool() {
 }
 
 function int(defaultValue= 0) {
-	const parse = parseInt;
-	return (args) => { 
-
-		if (args === undefined) return defaultValue;
-		if (args.length === 0) throw new Error("too few values");
-		if (args.length > 1) throw new Error("too many values"); 
-		return parse(args[0]);
-	}
+	return unary(defaultValue, parseInt)
 }
 
+
+
 function string(defaultValue = '') {
-	const parse = (value) => value ;
-	return (args) => { 
-		if (!args) return defaultValue;
-		if (args.length === 0) throw new Error("too few values");
-		if (args.length > 1) throw new Error("too many values"); 
+	return unary(defaultValue, (value) => value);	
+}
+
+function unary(defaultValue: number|string, parse) {
+	return (args) => {
+		if (!args)
+			return defaultValue;
+		if (args.length === 0)
+			throw new Error("too few values");
+		if (args.length > 1)
+			throw new Error("too many values");
 		return parse(args[0]);
-	}
+	};
 }
 
 function parse(schema, args) {
