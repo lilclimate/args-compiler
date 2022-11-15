@@ -19,7 +19,7 @@ import {describe, expect, test  } from "vitest";
 //	TODO:	string -d / -d /usr/local /usr/logs
 //	default
 //	bool:true
-//	TODO:	int:0	
+//	should return default value if undefined value given -> int:0	
 //	TODO: string:""
 
 describe('args', () => {
@@ -101,6 +101,10 @@ describe('int', () => {
 	test('should return int value if array with single value given', () => { 
 		expect(type(['1'])).toEqual(1);
 	});
+
+	test('should return default value if undefined value given', () => { 
+		expect(type(undefined)).toEqual(8080);
+	});
 });
 
 function parse(schema: any, args: string[]): any {
@@ -130,8 +134,9 @@ function bool(): Function {
 	 };
 }
 
-function int(): Function {
+function int(defaultValue: number= 8080): Function {
 	return (args): number => { 
+		if (!args) return defaultValue;
 		return parseInt(args[0]);
 	};
 }
