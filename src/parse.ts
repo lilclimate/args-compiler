@@ -9,17 +9,7 @@ export function option(flag, type) {
 		return type(args.slice(index + 1, nextIndex));
 	};
 }
-export function unary(defaultValue: number | string, parse) {
-	return (args) => {
-		if (!args)
-			return defaultValue;
-		if (args.length === 0)
-			throw new Error("too few values");
-		if (args.length > 1)
-			throw new Error("too many values");
-		return parse(args[0]);
-	};
-}
+
 export function parse(schema, args) {
 	let option = {};
 	for (let key of Object.keys(schema)) {
