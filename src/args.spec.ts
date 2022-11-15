@@ -20,7 +20,7 @@ import {describe, expect, test  } from "vitest";
 //	default
 //	bool:true
 //	should return default value if undefined value given -> int:0	
-//	TODO: string:""
+//	should return default value if undefined value given -> string:""
 
 describe('args', () => {
 	test.skip('should parse multi options', () => { 
@@ -112,6 +112,11 @@ describe('string', () => {
 		const type = string();
 		expect(type(['/usr/local'])).toEqual('/usr/local');
 	});	
+
+	test('should return default value if undefined value given', () => { 
+		const type = string();
+		expect(type(undefined)).toEqual('null');
+	});	
 });
 
 function parse(schema: any, args: string[]): any {
@@ -148,8 +153,9 @@ function int(defaultValue: number= 8080): Function {
 	};
 }
 
-function string(): Function {
+function string(defaultValue: string = "null"): Function {
 	return (args): string => { 
+		if (!args) return defaultValue;
 		return args[0];
 	}	
 }
