@@ -5,7 +5,7 @@ import {describe, expect, test  } from "vitest";
 //	TODO: should parse multi options in list
 // 	should call parse in schema to build option
 //	should fetch values follow by flag
-//	TODO: should only fetch values util next flag
+//	should only fetch values util next flag
 //	TODO: should fetch empty array if no value given
 //	TODO: should fetch undefined if no flag match
 //	TODO: should call type to handle values
@@ -68,6 +68,10 @@ describe('option', () => {
 	test('should only fetch values util next flag', () => { 
 		expect(opt(['-d', 'a', 'b', '-p'])).toEqual(['a', 'b']);	
 	});
+
+	test('should fetch empty array if no value given', () => {
+		expect(opt(['-d'])).toEqual([]);
+	 });
 });
 
 function parse(schema: any, args: string[]): any {
