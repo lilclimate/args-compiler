@@ -29,10 +29,20 @@ describe('Args parser', () => {
 			});
 		});	
 	});
+
+	describe('option', () => {
+		test('should fetch values follow by flag', () => { 
+			let opt = option('l', (values) => values);
+			expect(opt(['-l', 'a', 'b'])).toEqual(['a', 'b']);
+		})	
+	});
 });
 
 function option(flag ,type) { 
-
+	return (args) => { 
+		let index = args.indexOf(`-${flag}`);
+		return args.slice(index + 1);
+	}	
 }
 function bool(): any {
 }
