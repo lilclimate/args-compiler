@@ -147,17 +147,24 @@ function bool(defaultValue: boolean = true): Function {
 }
 
 function int(defaultValue: number= 8080): Function {
+	const parse = parseInt;
 	return (args): number => { 
 		if (!args) return defaultValue;
-		return parseInt(args[0]);
+		return parse(args[0]);
 	};
 }
 
 function string(defaultValue: string = "null"): Function {
-	return (args): string => { 
-		if (!args) return defaultValue;
-		return args[0];
-	}	
+	const parse = (value) => value;
+	return unary(defaultValue, parse)	
 }
 
+
+function unary(defaultValue: string, parse: Function): Function {
+	return (args): string => {
+		if (!args)
+			return defaultValue;
+		return parse(args[0]);
+	};
+}
 
