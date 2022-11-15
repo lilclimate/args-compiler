@@ -47,7 +47,16 @@ describe('Args parser', () => {
 		test('should fetch undefined if no flag match', () => { 
 			expect(opt(['-p', '8080'])).toBeUndefined();
 		})
+
+		test('should call type to handle values', () => { 
+			let opt = option('l', (values) => 1);
+			expect(opt(['-l', 'a', 'b'])).toEqual(1);
+		});
 	});
+
+	// describe('bool', () => {
+
+	// });
 });
 
 function option(flag ,type) { 
