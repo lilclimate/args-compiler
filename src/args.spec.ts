@@ -54,9 +54,12 @@ describe('Args parser', () => {
 		});
 	});
 
-	// describe('bool', () => {
-
-	// });
+	describe('bool', () => {
+		test('should return true if empty array given', () => {
+			let type = bool();	
+			expect(type([])).toBeTruthy();
+		});	
+	});
 });
 
 function option(flag ,type) { 
@@ -68,7 +71,10 @@ function option(flag ,type) {
 		return type(args.slice(index + 1, nextIndex));
 	}	
 }
-function bool(): any {
+function bool() {
+	return (args) => { 
+		if (args.length === 0) return true;
+	};
 }
 
 function int(): any {
