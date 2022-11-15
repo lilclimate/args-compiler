@@ -138,10 +138,10 @@ function option(flag: string, type: any) {
 	};
 }
 
-function bool(): Function {
+function bool(defaultValue: boolean = true): Function {
 	return (args): boolean => {
 		if (!args) return false;
-		if (args.length === 0) return true;
+		if (args.length === 0) return defaultValue;
 		return false;
 	 };
 }
