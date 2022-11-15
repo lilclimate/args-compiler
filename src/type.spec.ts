@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { bool, int, string } from "./type";
+import { bool } from "./type";
+import { IntDefaultValue, singleValueOptionParse, StringDefaultValue } from "./singleValueOptionParse";
 
 describe('bool', () => {
 	const type = bool();
@@ -16,7 +17,7 @@ describe('bool', () => {
 	});
 });
 describe('int', () => {
-	const type = int();
+	const type = singleValueOptionParse(IntDefaultValue, parseInt);
 	test('should return int value if array with single value given', () => {
 		expect(type(['1'])).toEqual(1);
 	});
@@ -34,7 +35,7 @@ describe('int', () => {
 	});
 });
 describe('string', () => {
-	const type = string();
+	const type = singleValueOptionParse(StringDefaultValue, (value) => value);
 	test('should return string value if array with single value given', () => {
 		expect(type(['/usr/local'])).toEqual('/usr/local');
 	});
