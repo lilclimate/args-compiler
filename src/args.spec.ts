@@ -43,12 +43,17 @@ describe('Args parser', () => {
 		test('should fetch empty array if no value given', () => {
 			expect(opt(['-l'])).toEqual([]);	
 		});
+
+		test('should fetch undefined if no flag match', () => { 
+			expect(opt(['-p', '8080'])).toBeUndefined();
+		})
 	});
 });
 
 function option(flag ,type) { 
 	return (args) => { 
 		let index = args.indexOf(`-${flag}`);
+		if (index=== -1) return undefined;
 		let nextIndex = args.findIndex((v, i) => i > index && /^-[a-zA-Z-]+/.test(v) );
 		if (nextIndex === -1) nextIndex = args.length; 
 		return type(args.slice(index + 1, nextIndex));
