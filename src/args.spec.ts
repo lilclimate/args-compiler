@@ -1,6 +1,6 @@
 import {describe, expect, test  } from "vitest";
 describe('Args parser', () => {
-	test.skip('should parse multi options', () => {
+	test('should parse multi options', () => {
 		let schema = {
 			logging: option('l', bool()),
 			directory: option('d', string()),
