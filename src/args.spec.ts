@@ -79,6 +79,9 @@ describe('Args parser', () => {
 			expect(() => type(['1', '2'])).toThrowError('too many values');
 		});
 
+		test('should throw exception if no value present', () => { 
+			expect(() => type([])).toThrowError('too few values');
+		})
 	
 	});
 
@@ -113,6 +116,7 @@ function bool() {
 function int(defaultValue= 0) {
 	return (args) => { 
 		if (args === undefined) return defaultValue;
+		if (args.length === 0) throw new Error("too few values");
 		if (args.length === 1) return parseInt(args[0]);
 		if (args.length > 1) throw new Error("too many values"); 
 	}
