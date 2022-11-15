@@ -15,8 +15,9 @@ import {describe, expect, test  } from "vitest";
 //	should return string value if array with single value given -> string -d /usr/logs
 //	sad path
 //	TODO:	bool -l t / -l t f
-//	TODO: int -p / -p 8080 8081
-//	TODO:	string -d / -d /usr/local /usr/logs
+//  should throw exception if more than 1 value present/ should throw exception if no value present
+//		-> TODO: int -p / -p 8080 8081
+//		-> TODO: string -d / -d /usr/local /usr/logs
 //	default
 //	bool:true
 //	should return default value if undefined value given -> int:0	
@@ -105,18 +106,32 @@ describe('int', () => {
 	test('should return default value if undefined value given', () => { 
 		expect(type(undefined)).toEqual(8080);
 	});
+
+	test('should throw exception if more than 1 value present', () => { 
+		expect(() => type(['8080', '8090'])).toThrowError('too many values');
+	});
+
+	test('should throw exception if no value present', () => { 
+		expect(() => type([])).toThrowError('too few values');
+	})
 });
 
 describe('string', () => {
+	const type = string();
 	test('should return string value if array with single value given', () => { 
-		const type = string();
 		expect(type(['/usr/local'])).toEqual('/usr/local');
 	});	
 
 	test('should return default value if undefined value given', () => { 
-		const type = string();
 		expect(type(undefined)).toEqual('null');
 	});	
+
+	test('should throw exception if more than 1 value present', () => { 
+		expect(() => type(['/usr/local', '/usr/logs'])).toThrowError('too many values');
+	});
+	test('should throw exception if no value present', () => { 
+		expect(() => type([])).toThrowError('too few values');
+	})
 });
 
 function parse(schema: any, args: string[]): any {
@@ -148,10 +163,7 @@ function bool(defaultValue: boolean = true): Function {
 
 function int(defaultValue: number= 8080): Function {
 	const parse = parseInt;
-	return (args): number => { 
-		if (!args) return defaultValue;
-		return parse(args[0]);
-	};
+	return unary(defaultValue, parse)	
 }
 
 function string(defaultValue: string = "null"): Function {
@@ -160,10 +172,12 @@ function string(defaultValue: string = "null"): Function {
 }
 
 
-function unary(defaultValue: string, parse: Function): Function {
-	return (args): string => {
+function unary(defaultValue: string|number, parse: Function): Function {
+	return (args): string|number => {
 		if (!args)
 			return defaultValue;
+		if (args.length === 0) throw new Error("too few values");
+		if (args.length > 1) throw new Error("too many values");
 		return parse(args[0]);
 	};
 }
