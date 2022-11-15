@@ -8,7 +8,7 @@ import {describe, expect, test  } from "vitest";
 //	should only fetch values util next flag
 //	should fetch empty array if no value given
 //	should fetch undefined if no flag match
-//	TODO: should call type to handle values
+//	should call type to handle values
 //	TODO: bool -l	
 //	TODO: int -p 8080
 //	TODO: string -d /usr/logs
@@ -76,6 +76,12 @@ describe('option', () => {
 	test('should fetch undefined if no flag match', () => { 
 		expect(opt(['-p', '8080'])).toBeUndefined();
 	});
+
+	test('should call type to handle values', () => { 
+		const opt = option('d', (value) => false);
+		expect(opt(['-d', '/usr/log'])).toBeFalsy();
+		expect(opt(['-p', '8080'])).toBeFalsy();
+	});
 });
 
 function parse(schema: any, args: string[]): any {
@@ -90,10 +96,10 @@ function parse(schema: any, args: string[]): any {
 function option(flag: string, type: any) {
 	return (args) => { 
 		const flagIndex = args.indexOf(`-${flag}`);
-		if (flagIndex === -1) return undefined;
+		if (flagIndex === -1) return type(undefined); 
 		let nextFlagIndex = args.findIndex((v, i) => i > flagIndex && /^-[a-zA-Z-]+/.test(v))
 		nextFlagIndex = nextFlagIndex === -1 ? args.length : nextFlagIndex;
-		return args.slice(flagIndex + 1, nextFlagIndex);
+		return type(args.slice(flagIndex + 1, nextFlagIndex));
 	};
 }
 
