@@ -122,8 +122,9 @@ function bool() {
 }
 
 function int(defaultValue= 0) {
+	const parse = parseInt;
 	return (args) => { 
-		const parse = parseInt;
+
 		if (args === undefined) return defaultValue;
 		if (args.length === 0) throw new Error("too few values");
 		if (args.length > 1) throw new Error("too many values"); 
@@ -132,8 +133,8 @@ function int(defaultValue= 0) {
 }
 
 function string(defaultValue = '') {
+	const parse = (value) => value ;
 	return (args) => { 
-		const parse = (value) => value ;
 		if (!args) return defaultValue;
 		if (args.length === 0) throw new Error("too few values");
 		if (args.length > 1) throw new Error("too many values"); 
