@@ -75,6 +75,15 @@ describe('Args parser', () => {
 			expect(type(undefined)).toEqual(8080);			
 		});	
 	});
+
+	describe('string', () => {
+		const type = string();
+		test('should return string value if array with single value given', () => { 
+			expect(type(['/usr/logs'])).toEqual('/usr/logs');
+		});	
+
+		test.skip('should return default value if undefined value given', () => { });
+	});
 });
 
 function option(flag ,type) { 
@@ -100,7 +109,10 @@ function int(defaultValue= 0) {
 	}
 }
 
-function string(): any {
+function string() {
+	return (args) => { 
+		if (args.length === 1) return args[0];
+	}
 }
 
 function parse(schema, args) {
