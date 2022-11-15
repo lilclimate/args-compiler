@@ -1,6 +1,6 @@
 
 
-export function bool(defaultValue: boolean = true): Function {
+export function booleanOptionParser(defaultValue: boolean = true): Function {
 	return (args): boolean => {
 		if (!args)
 			return false;

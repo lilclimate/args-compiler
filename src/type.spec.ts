@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { bool } from "./type";
-import { IntDefaultValue, singleValueOptionParse, StringDefaultValue } from "./singleValueOptionParse";
+import { booleanOptionParser } from "./booleanOptionParser";
+import { IntDefaultValue, singleValueOptionParser, StringDefaultValue } from "./singleValueOptionParser";
 
 describe('bool', () => {
-	const type = bool();
+	const type = booleanOptionParser();
 	test('should return true if empty array given', () => {
 		expect(type([])).toBeTruthy();
 	});
@@ -17,7 +17,7 @@ describe('bool', () => {
 	});
 });
 describe('int', () => {
-	const type = singleValueOptionParse(IntDefaultValue, parseInt);
+	const type = singleValueOptionParser(IntDefaultValue, parseInt);
 	test('should return int value if array with single value given', () => {
 		expect(type(['1'])).toEqual(1);
 	});
@@ -35,7 +35,7 @@ describe('int', () => {
 	});
 });
 describe('string', () => {
-	const type = singleValueOptionParse(StringDefaultValue, (value) => value);
+	const type = singleValueOptionParser(StringDefaultValue, (value) => value);
 	test('should return string value if array with single value given', () => {
 		expect(type(['/usr/local'])).toEqual('/usr/local');
 	});

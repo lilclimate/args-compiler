@@ -1,8 +1,8 @@
 import {describe, expect, test  } from "vitest";
 import { parse } from "./args";
 import { option } from "./option";
-import { bool } from "./type";
-import { IntDefaultValue, singleValueOptionParse, StringDefaultValue } from "./singleValueOptionParse";
+import { booleanOptionParser } from "./booleanOptionParser";
+import { IntDefaultValue, singleValueOptionParser, StringDefaultValue } from "./singleValueOptionParser";
 
 //	happy path
 //	should parse multi options		  
@@ -30,9 +30,9 @@ import { IntDefaultValue, singleValueOptionParse, StringDefaultValue } from "./s
 describe('args', () => {
 	test('should parse multi options', () => { 
 		let schema = {
-			logging: option('l', bool()), 
-			int: option('p', singleValueOptionParse(IntDefaultValue, parseInt)),
-			string: option('d', singleValueOptionParse(StringDefaultValue, (value) => value)),
+			logging: option('l', booleanOptionParser()), 
+			int: option('p', singleValueOptionParser(IntDefaultValue, parseInt)),
+			string: option('d', singleValueOptionParser(StringDefaultValue, (value) => value)),
 		};
 		expect(parse(schema, ['-l', '-p', '8080', '-d', '/usr/logs'])).toEqual({
 			logging: true,
@@ -42,9 +42,9 @@ describe('args', () => {
 	});
 	test.skip('should parse multi options in list', () => { 
 		let schema = {
-			logging: option('l', bool()), 
-			int: option('p', singleValueOptionParse(IntDefaultValue, parseInt)),
-			string: option('d', singleValueOptionParse(StringDefaultValue, (value) => value)),
+			logging: option('l', booleanOptionParser()), 
+			int: option('p', singleValueOptionParser(IntDefaultValue, parseInt)),
+			string: option('d', singleValueOptionParser(StringDefaultValue, (value) => value)),
 		};
 		expect(parse(schema, ['-g', 'this', 'is', 'a', 'list', 'd', '1', '2', '-3', '5'])).toEqual({
 			string: ['this', 'is', 'a', 'list'],
