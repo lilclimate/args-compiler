@@ -55,10 +55,14 @@ describe('Args parser', () => {
 	});
 
 	describe('bool', () => {
+		const type = bool();	
 		test('should return true if empty array given', () => {
-			let type = bool();	
 			expect(type([])).toBeTruthy();
 		});	
+
+		test('should return false if undefined given', () => { 
+			expect(type(undefined)).toBeFalsy();
+		});
 	});
 });
 
@@ -73,6 +77,7 @@ function option(flag ,type) {
 }
 function bool() {
 	return (args) => { 
+		if (args === undefined) return false;
 		if (args.length === 0) return true;
 	};
 }
