@@ -1,11 +1,12 @@
 import {describe, expect, test  } from "vitest";
 
 //	happy path
+//	TODO: should parse multi options		  
+//	TODO: should parse multi options in list
+// 	TODO: should call parse in schema to build option
 //	TODO: bool -l	
 //	TODO: int -p 8080
 //	TODO: string -d /usr/logs
-//	TODO: should parse multi options		  
-//	TODO: should parse multi options in list
 //	sad path
 //	TODO:	bool -l t / -l t f
 //	TODO: int -p / -p 8080 8081
@@ -28,7 +29,6 @@ describe('args', () => {
 			string: "/usr/logs"
 		});
 	});
-
 	test.skip('should parse multi options in list', () => { 
 		let schema = {
 			logging: option('l', bool()), 
@@ -42,7 +42,23 @@ describe('args', () => {
 	})
 });
 
+describe('parse', () => {
+	test('should call parse in schema to build option', () => { 
+		let schema = {
+			logging: (args) => args,
+			int: (args) => args,
+			string: (args) => args
+		};
+		expect(parse(schema, ['args'])).toEqual({logging: ['args'], int: ['args'], string: ['args']});
+	});
+});
+
 function parse(schema: any, args: string[]): any {
+	const option = {};
+	for (const key of Object.keys(schema)) {
+		option[key] = schema[key](args);	
+	}	
+	return option;
 }
 
 
