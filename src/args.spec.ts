@@ -123,19 +123,21 @@ function bool() {
 
 function int(defaultValue= 0) {
 	return (args) => { 
+		const parse = parseInt;
 		if (args === undefined) return defaultValue;
 		if (args.length === 0) throw new Error("too few values");
-		if (args.length === 1) return parseInt(args[0]);
 		if (args.length > 1) throw new Error("too many values"); 
+		return parse(args[0]);
 	}
 }
 
 function string(defaultValue = '') {
 	return (args) => { 
+		const parse = (value) => value ;
 		if (!args) return defaultValue;
 		if (args.length === 0) throw new Error("too few values");
-		if (args.length === 1) return args[0];
 		if (args.length > 1) throw new Error("too many values"); 
+		return parse(args[0]);
 	}
 }
 
