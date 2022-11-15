@@ -1,7 +1,7 @@
 import {describe, expect, test  } from "vitest";
 
 //	happy path
-//	TODO: should parse multi options		  
+//	should parse multi options		  
 //	TODO: should parse multi options in list
 // 	should call parse in schema to build option
 //	should fetch values follow by flag
@@ -14,10 +14,10 @@ import {describe, expect, test  } from "vitest";
 //	should return int value if array with single value given ->  int -p 8080
 //	should return string value if array with single value given -> string -d /usr/logs
 //	sad path
-//	TODO:	bool -l t / -l t f
+//	bool -l t / -l t f
 //  should throw exception if more than 1 value present/ should throw exception if no value present
-//		-> TODO: int -p / -p 8080 8081
-//		-> TODO: string -d / -d /usr/local /usr/logs
+//		-> int -p / -p 8080 8081
+//		-> string -d / -d /usr/local /usr/logs
 //	default
 //	bool:true
 //	should return default value if undefined value given -> int:0	
@@ -95,6 +95,10 @@ describe('bool', () => {
 	test('should return false if undefined given', () => { 
 		expect(type(undefined)).toBeFalsy();
 	});
+
+	test('should throw error if not empty array given', () => { 
+		expect(() => type(['true'])).toThrowError("too many values");
+	})
 })
 
 describe('int', () => {
@@ -156,6 +160,7 @@ function option(flag: string, type: any) {
 function bool(defaultValue: boolean = true): Function {
 	return (args): boolean => {
 		if (!args) return false;
+		if (args.length > 0) throw new Error("too many values");
 		if (args.length === 0) return defaultValue;
 		return false;
 	 };
