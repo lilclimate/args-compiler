@@ -3,7 +3,12 @@ import {describe, expect, test  } from "vitest";
 //	happy path
 //	TODO: should parse multi options		  
 //	TODO: should parse multi options in list
-// 	TODO: should call parse in schema to build option
+// 	should call parse in schema to build option
+//	TODO: should fetch values follow by flag
+//	TODO: should only fetch values util next flag
+//	TODO: should fetch empty array if no value given
+//	TODO: should fetch undefined if no flag match
+//	TODO: should call type to handle values
 //	TODO: bool -l	
 //	TODO: int -p 8080
 //	TODO: string -d /usr/logs
