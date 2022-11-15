@@ -31,17 +31,23 @@ describe('Args parser', () => {
 	});
 
 	describe('option', () => {
+		const  opt = option('l', (values) => values);
 		test('should fetch values follow by flag', () => { 
-			let opt = option('l', (values) => values);
 			expect(opt(['-l', 'a', 'b'])).toEqual(['a', 'b']);
 		})	
+
+		test('should only fetch values util next flag', () => { 
+			expect(opt(['-l', 'a', 'b', '-p'])).toEqual(['a', 'b']);
+		});
 	});
 });
 
 function option(flag ,type) { 
 	return (args) => { 
 		let index = args.indexOf(`-${flag}`);
-		return args.slice(index + 1);
+		let nextIndex = args.findIndex((v, i) => i > index && /^-[a-zA-Z-]+/.test(v) );
+		if (nextIndex === -1) nextIndex = args.length; 
+		return args.slice(index + 1, nextIndex);
 	}	
 }
 function bool(): any {
