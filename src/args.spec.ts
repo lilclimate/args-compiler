@@ -74,6 +74,12 @@ describe('Args parser', () => {
 		test('should return default value if undefined value given', () => { 
 			expect(type(undefined)).toEqual(8080);			
 		});	
+
+		test('should throw exception if more than 1 value present', () => { 
+			expect(() => type(['1', '2'])).toThrowError('too many values');
+		});
+
+	
 	});
 
 	describe('string', () => {
@@ -108,6 +114,7 @@ function int(defaultValue= 0) {
 	return (args) => { 
 		if (args === undefined) return defaultValue;
 		if (args.length === 1) return parseInt(args[0]);
+		if (args.length > 1) throw new Error("too many values"); 
 	}
 }
 
